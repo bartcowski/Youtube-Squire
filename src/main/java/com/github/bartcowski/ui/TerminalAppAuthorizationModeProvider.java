@@ -1,7 +1,7 @@
 package com.github.bartcowski.ui;
 
-import com.github.bartcowski.authorization.AuthMethodType;
 import com.github.bartcowski.infrastructure.AppAuthorizationModeProvider;
+import com.github.bartcowski.infrastructure.authorization.AuthMethodType;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;

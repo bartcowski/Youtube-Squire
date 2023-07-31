@@ -1,6 +1,6 @@
-package com.github.bartcowski.rest;
+package com.github.bartcowski.infrastructure.rest;
 
-import com.github.bartcowski.authorization.AuthorizationSupplier;
+import com.github.bartcowski.infrastructure.authorization.AuthorizationSupplier;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -19,11 +19,11 @@ public class RestRequestBuilder {
 
     private String fullPath;
 
-    RestRequestBuilder(String basePath) {
+    public RestRequestBuilder(String basePath) {
         this.basePath = basePath;
     }
 
-    RestRequestBuilder path(String path) {
+    public RestRequestBuilder path(String path) {
         fullPath = basePath + path;
         return this;
     }
@@ -38,17 +38,17 @@ public class RestRequestBuilder {
         return this;
     }
 
-    RestRequestBuilder GET() {
+    public RestRequestBuilder GET() {
         requestBuilder.GET();
         return this;
     }
 
-    RestRequestBuilder authorize(AuthorizationSupplier authorizationSupplier) {
+    public RestRequestBuilder authorize(AuthorizationSupplier authorizationSupplier) {
         authorizationSupplier.authorize(this);
         return this;
     }
 
-    HttpRequest buildWithDefaultTimeout() {
+    public HttpRequest buildWithDefaultTimeout() {
         return requestBuilder
                 .uri(URI.create(fullPath))
                 .timeout(Duration.ofSeconds(DEFAULT_TIMEOUT_IN_SECONDS))

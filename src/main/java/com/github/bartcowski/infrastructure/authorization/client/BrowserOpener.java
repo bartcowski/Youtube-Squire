@@ -1,4 +1,4 @@
-package com.github.bartcowski.authorization.client;
+package com.github.bartcowski.infrastructure.authorization.client;
 
 import java.awt.*;
 import java.io.IOException;

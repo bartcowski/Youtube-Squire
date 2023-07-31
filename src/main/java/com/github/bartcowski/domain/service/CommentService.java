@@ -1,7 +1,7 @@
 package com.github.bartcowski.domain.service;
 
 import com.github.bartcowski.domain.entity.Comment;
-import com.github.bartcowski.rest.CommentYoutubeRestClient;
+import com.github.bartcowski.infrastructure.rest.CommentYoutubeRestClient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

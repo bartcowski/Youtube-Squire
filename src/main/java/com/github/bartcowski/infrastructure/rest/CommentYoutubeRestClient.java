@@ -1,8 +1,8 @@
-package com.github.bartcowski.rest;
+package com.github.bartcowski.infrastructure.rest;
 
-import com.github.bartcowski.authorization.AuthorizationSupplier;
 import com.github.bartcowski.domain.entity.Comment;
 import com.github.bartcowski.domain.entity.User;
+import com.github.bartcowski.infrastructure.authorization.AuthorizationSupplier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

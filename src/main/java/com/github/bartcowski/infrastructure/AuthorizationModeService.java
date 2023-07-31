@@ -1,7 +1,7 @@
 package com.github.bartcowski.infrastructure;
 
-import com.github.bartcowski.authorization.AuthMethodType;
-import com.github.bartcowski.authorization.AuthorizationSupplier;
+import com.github.bartcowski.infrastructure.authorization.AuthMethodType;
+import com.github.bartcowski.infrastructure.authorization.AuthorizationSupplier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

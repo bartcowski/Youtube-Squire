@@ -1,4 +1,4 @@
-package com.github.bartcowski.rest;
+package com.github.bartcowski.infrastructure.rest;
 
 import com.google.gson.Gson;
 

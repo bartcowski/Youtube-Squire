@@ -1,4 +1,4 @@
-package com.github.bartcowski.authorization.server;
+package com.github.bartcowski.infrastructure.authorization.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -17,13 +17,15 @@ class OAuthCallbackHandler implements HttpHandler {
         String query = exchange.getRequestURI().getQuery();
         System.out.println("Received query from oAuth callback: " + query);
 
-        //parse the query to get the authorization code and store it for further use
         Map<String, String> queryParams = parseQueryParameters(query);
         String authorizationCode = queryParams.get("code");
 
         if (authorizationCode == null) {
             throw new RuntimeException("OAUTH WENT WRONG!");
         }
+        //TODO: store logic here, file? if not then only events come to mind
+        // then I need to use this auth_code to send a request for access token
+
         String response = "Authorization successful! You can close this window.";
         exchange.sendResponseHeaders(200, response.length());
         OutputStream outputStream = exchange.getResponseBody();

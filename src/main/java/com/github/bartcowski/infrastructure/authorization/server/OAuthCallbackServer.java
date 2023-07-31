@@ -1,4 +1,4 @@
-package com.github.bartcowski.authorization.server;
+package com.github.bartcowski.infrastructure.authorization.server;
 
 import com.sun.net.httpserver.HttpServer;
 

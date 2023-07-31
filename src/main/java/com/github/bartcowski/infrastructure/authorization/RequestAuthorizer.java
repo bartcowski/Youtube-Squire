@@ -1,6 +1,6 @@
-package com.github.bartcowski.authorization;
+package com.github.bartcowski.infrastructure.authorization;
 
-import com.github.bartcowski.rest.RestRequestBuilder;
+import com.github.bartcowski.infrastructure.rest.RestRequestBuilder;
 
 public interface RequestAuthorizer {
 
