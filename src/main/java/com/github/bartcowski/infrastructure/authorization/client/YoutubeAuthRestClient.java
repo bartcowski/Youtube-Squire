@@ -6,6 +6,8 @@ import com.github.bartcowski.infrastructure.rest.RestRequestBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import static com.github.bartcowski.util.RestUtils.addParamsToUrl;
@@ -33,21 +35,23 @@ public class YoutubeAuthRestClient extends AbstractYoutubeRestClient {
 
     public String getAccessToken(String authCode) {
         RestRequestBuilder requestBuilder = new RestRequestBuilder(GOOGLE_ACCESS_TOKEN_URL)
-                .GET()
-                .params(buildParamsForAccessTokenRequest(authCode));
+                .POST(buildParamsForAccessTokenRequest(authCode))
+                .path("")
+                .header("Content-Type", "application/x-www-form-urlencoded");
 
         return sendRequest(requestBuilder, AccessTokenResponseDTO.class).access_token;
     }
 
     private Map<String, String> buildParamsForAuthCodeRequest() {
         String responseType = "code";
-        String scope = "https://www.googleapis.com/auth/youtube.readonly";
+        String scope =
+                "https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl";
 
         return Map.of(
                 "client_id", clientId,
                 "redirect_uri", OAuthCallbackServer.getCallbackServerUrl(),
                 "response_type", responseType,
-                "scope", scope
+                "scope", URLEncoder.encode(scope, StandardCharsets.UTF_8)
         );
     }
 

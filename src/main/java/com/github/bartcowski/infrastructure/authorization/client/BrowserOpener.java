@@ -6,7 +6,7 @@ import java.net.URI;
 
 public class BrowserOpener {
 
-    public void browse(String url) {
+    public static void browse(String url) {
         Desktop desktop = Desktop.getDesktop();
         try {
             desktop.browse(URI.create(url));

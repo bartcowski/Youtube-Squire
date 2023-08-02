@@ -34,4 +34,18 @@ class RestUtilsTest extends Specification {
         urlWithParams == "http://localhost?key1=val1&key2=val2&key3=val3"
     }
 
+    def "should properly build request body"() {
+        given:
+        def bodyData = [
+                "key1": "val1",
+                "key2": "val2"
+        ]
+
+        when:
+        def result = RestUtils.createRequestBody(bodyData)
+
+        then:
+        result == "key1=val1&key2=val2"
+    }
+
 }

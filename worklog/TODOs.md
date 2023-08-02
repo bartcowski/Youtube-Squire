@@ -5,3 +5,4 @@
 3. should chosen auth method be stored in AuthorizationSupplier?
 4. path/params etc. should be STORED inside RestRequestBuilder. That way we can chain its methods in any order. Now if we use "params" before "path" we will fail.
    1. this may also improve request authorization flow
+   2. that way we would be able to add .body method instead of putting it into POST()

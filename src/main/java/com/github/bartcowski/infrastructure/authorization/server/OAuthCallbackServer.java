@@ -4,14 +4,15 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.concurrent.CompletableFuture;
 
 public class OAuthCallbackServer {
 
-    static final String HOST = "http://localhost";
+    private static final String HOST = "http://localhost";
 
-    static final int PORT = 8080;
+    private static final int PORT = 8080;
 
-    static final String CALLBACK_CONTEXT = "/oauth/callback";
+    private static final String CALLBACK_CONTEXT = "/oauth/callback";
 
     private static final HttpServer server;
 
@@ -23,14 +24,13 @@ public class OAuthCallbackServer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        server.createContext(CALLBACK_CONTEXT, new OAuthCallbackHandler());
     }
 
-    public static void start() {
+    public static void start(CompletableFuture<String> authCodeCompletableFuture) {
         if (isActive) {
             return;
         }
+        server.createContext(CALLBACK_CONTEXT, new OAuthCallbackHandler(authCodeCompletableFuture));
         server.start();
         isActive = true;
         System.out.println("OAuth callback HTTP server listening on port " + PORT);

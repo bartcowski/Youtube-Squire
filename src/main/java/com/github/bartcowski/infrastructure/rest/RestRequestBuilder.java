@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.util.Map;
 
 import static com.github.bartcowski.util.RestUtils.addParamsToUrl;
+import static com.github.bartcowski.util.RestUtils.createRequestBody;
 
 public class RestRequestBuilder {
 
@@ -40,6 +41,11 @@ public class RestRequestBuilder {
 
     public RestRequestBuilder GET() {
         requestBuilder.GET();
+        return this;
+    }
+
+    public RestRequestBuilder POST(Map<String, String> bodyData) {
+        requestBuilder.POST(HttpRequest.BodyPublishers.ofString(createRequestBody(bodyData)));
         return this;
     }
 

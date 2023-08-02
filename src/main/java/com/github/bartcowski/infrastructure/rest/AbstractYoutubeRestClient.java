@@ -32,7 +32,7 @@ public abstract class AbstractYoutubeRestClient {
             String responseBody = response.body();
             return gson.fromJson(responseBody, returnClass);
         } else {
-            System.out.println("Request failed, url: " + request.uri());
+            System.out.println("Request failed. " + "code: " + response.statusCode() + " url: " + request.uri() + " body: " + response.body());
             return null; //TODO: return Optional<T> from this method?
         }
     }

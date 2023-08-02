@@ -1,6 +1,7 @@
 package com.github.bartcowski.ui;
 
 import com.github.bartcowski.infrastructure.AppRunnerService;
+import com.github.bartcowski.infrastructure.authorization.server.OAuthCallbackServer;
 import com.github.bartcowski.infrastructure.viewadapters.CommentServiceViewAdapter;
 import com.github.bartcowski.infrastructure.viewadapters.CommentViewDTO;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ class TerminalAppRunnerService implements AppRunnerService {
                     break;
                 }
                 case 0: {
+                    OAuthCallbackServer.stop(); //TODO: should it be accessed globally? (make non static?)
                     run = false;
                     System.out.println("Bye!");
                     break;

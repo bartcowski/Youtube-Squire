@@ -9,8 +9,15 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 class OAuthCallbackHandler implements HttpHandler {
+
+    private final CompletableFuture<String> authCodeCompletableFuture;
+
+    OAuthCallbackHandler(CompletableFuture<String> authCodeCompletableFuture) {
+        this.authCodeCompletableFuture = authCodeCompletableFuture;
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -23,8 +30,7 @@ class OAuthCallbackHandler implements HttpHandler {
         if (authorizationCode == null) {
             throw new RuntimeException("OAUTH WENT WRONG!");
         }
-        //TODO: store logic here, file? if not then only events come to mind
-        // then I need to use this auth_code to send a request for access token
+        authCodeCompletableFuture.complete(authorizationCode);
 
         String response = "Authorization successful! You can close this window.";
         exchange.sendResponseHeaders(200, response.length());
