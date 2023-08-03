@@ -1,5 +1,6 @@
 package com.github.bartcowski.infrastructure.authorization.server;
 
+import com.github.bartcowski.infrastructure.authorization.entity.AuthorizationCode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -13,9 +14,9 @@ import java.util.concurrent.CompletableFuture;
 
 class OAuthCallbackHandler implements HttpHandler {
 
-    private final CompletableFuture<String> authCodeCompletableFuture;
+    private final CompletableFuture<AuthorizationCode> authCodeCompletableFuture;
 
-    OAuthCallbackHandler(CompletableFuture<String> authCodeCompletableFuture) {
+    OAuthCallbackHandler(CompletableFuture<AuthorizationCode> authCodeCompletableFuture) {
         this.authCodeCompletableFuture = authCodeCompletableFuture;
     }
 
@@ -30,7 +31,7 @@ class OAuthCallbackHandler implements HttpHandler {
         if (authorizationCode == null) {
             throw new RuntimeException("OAUTH WENT WRONG!");
         }
-        authCodeCompletableFuture.complete(authorizationCode);
+        authCodeCompletableFuture.complete(new AuthorizationCode(authorizationCode));
 
         String response = "Authorization successful! You can close this window.";
         exchange.sendResponseHeaders(200, response.length());

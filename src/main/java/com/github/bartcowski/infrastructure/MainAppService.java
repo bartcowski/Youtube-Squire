@@ -7,13 +7,16 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MainAppService {
 
-    private final AuthorizationModeService authorizationModeService;
+    private final AppAuthorizationModeService appAuthorizationModeService;
 
     private final AppRunnerService appRunnerService;
 
+    private final AppCleanupService appCleanupService;
+
     public void startApp() {
-        authorizationModeService.setMode();
+        appAuthorizationModeService.setMode();
         appRunnerService.run();
+        appCleanupService.cleanup();
     }
 
 }

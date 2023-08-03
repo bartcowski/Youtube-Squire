@@ -1,5 +1,6 @@
 package com.github.bartcowski.infrastructure.authorization.server;
 
+import com.github.bartcowski.infrastructure.authorization.entity.AuthorizationCode;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class OAuthCallbackServer {
         }
     }
 
-    public static void start(CompletableFuture<String> authCodeCompletableFuture) {
+    public static void start(CompletableFuture<AuthorizationCode> authCodeCompletableFuture) {
         if (isActive) {
             return;
         }
@@ -37,7 +38,7 @@ public class OAuthCallbackServer {
     }
 
     public static void stop() {
-        server.stop(10);
+        server.stop(3);
         isActive = false;
         System.out.println("OAuth callback HTTP server is off");
     }

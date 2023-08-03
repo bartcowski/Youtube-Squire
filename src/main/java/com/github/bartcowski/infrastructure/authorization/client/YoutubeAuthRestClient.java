@@ -1,5 +1,7 @@
 package com.github.bartcowski.infrastructure.authorization.client;
 
+import com.github.bartcowski.infrastructure.authorization.entity.AccessToken;
+import com.github.bartcowski.infrastructure.authorization.entity.AuthorizationCode;
 import com.github.bartcowski.infrastructure.authorization.server.OAuthCallbackServer;
 import com.github.bartcowski.infrastructure.rest.AbstractYoutubeRestClient;
 import com.github.bartcowski.infrastructure.rest.RestRequestBuilder;
@@ -13,7 +15,7 @@ import java.util.Map;
 import static com.github.bartcowski.util.RestUtils.addParamsToUrl;
 
 @Service
-public class YoutubeAuthRestClient extends AbstractYoutubeRestClient {
+public class YoutubeAuthRestClient extends AbstractYoutubeRestClient implements OAuthRestClient {
 
     private static final String GOOGLE_OAUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 
@@ -33,13 +35,13 @@ public class YoutubeAuthRestClient extends AbstractYoutubeRestClient {
         return addParamsToUrl(GOOGLE_OAUTH_URL, buildParamsForAuthCodeRequest());
     }
 
-    public String getAccessToken(String authCode) {
+    public AccessToken getAccessToken(AuthorizationCode authCode) {
         RestRequestBuilder requestBuilder = new RestRequestBuilder(GOOGLE_ACCESS_TOKEN_URL)
-                .POST(buildParamsForAccessTokenRequest(authCode))
+                .POST(buildParamsForAccessTokenRequest(authCode.code()))
                 .path("")
                 .header("Content-Type", "application/x-www-form-urlencoded");
 
-        return sendRequest(requestBuilder, AccessTokenResponseDTO.class).access_token;
+        return sendRequest(requestBuilder, AccessTokenResponseDTO.class).toDomain();
     }
 
     private Map<String, String> buildParamsForAuthCodeRequest() {
@@ -69,5 +71,13 @@ public class YoutubeAuthRestClient extends AbstractYoutubeRestClient {
         String access_token;
         long expires_in;
         String refresh_token;
+
+        AccessToken toDomain() {
+            return new AccessToken(
+                    access_token,
+                    refresh_token,
+                    expires_in
+            );
+        }
     }
 }
