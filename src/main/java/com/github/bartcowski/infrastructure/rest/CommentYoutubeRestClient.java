@@ -23,7 +23,10 @@ public class CommentYoutubeRestClient extends AbstractYoutubeRestClient {
                 .params(buildParams(videoId))
                 .authorize(authorizationSupplier);
 
-        return sendRequest(requestBuilder, CommentResponseDTO.class).items.stream()
+        //TODO: cache K=videoId V=List<Comment> ??? Request heavy even with 100 results per page
+        return sendPageableRequest(requestBuilder, CommentResponseDTO.class).stream()
+                .map(dto -> dto.items)
+                .flatMap(List::stream)
                 .map(dto -> dto.snippet.topLevelComment.snippet)
                 .map(TopLevelCommentSnippetDTO::toDomain)
                 .collect(Collectors.toList());
@@ -34,12 +37,18 @@ public class CommentYoutubeRestClient extends AbstractYoutubeRestClient {
                 "part", "snippet",
                 "textFormat", "plainText",
                 "videoId", videoId,
-                "maxResults", "5" //TODO: just for testing, paging needed
+                "maxResults", "100"
         );
     }
 
-    private static class CommentResponseDTO {
+    private static class CommentResponseDTO implements PageableResponse {
         List<CommentResponseItemDTO> items;
+        String nextPageToken;
+
+        @Override
+        public String getNextPageId() {
+            return nextPageToken;
+        }
     }
 
     private static class CommentResponseItemDTO {
