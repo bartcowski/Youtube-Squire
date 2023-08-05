@@ -6,6 +6,6 @@ public record Comment(
         int likeCount) {
 
     public boolean containsPhrase(String phrase) {
-        return text.contains(phrase);
+        return text.toLowerCase().contains(phrase.toLowerCase());
     }
 }

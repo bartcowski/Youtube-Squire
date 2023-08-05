@@ -2,6 +2,7 @@ package com.github.bartcowski.infrastructure.rest;
 
 import com.github.bartcowski.domain.entity.Comment;
 import com.github.bartcowski.domain.entity.User;
+import com.github.bartcowski.domain.service.CommentProvider;
 import com.github.bartcowski.infrastructure.authorization.AuthorizationSupplier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,12 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class CommentYoutubeRestClient extends AbstractYoutubeRestClient {
+public class CommentYoutubeRestClient extends AbstractYoutubeRestClient implements CommentProvider {
 
     private final AuthorizationSupplier authorizationSupplier;
 
-    public List<Comment> getCommentsOfVideo(String videoId) {
+    @Override
+    public List<Comment> findAllComments(String videoId) {
         RestRequestBuilder requestBuilder = new RestRequestBuilder(BASE_URL)
                 .GET()
                 .path("/commentThreads")
@@ -73,7 +75,7 @@ public class CommentYoutubeRestClient extends AbstractYoutubeRestClient {
 
         Comment toDomain() {
             return new Comment(
-                    new User("unknown", authorDisplayName),
+                    new User(authorDisplayName),
                     textDisplay,
                     Integer.parseInt(likeCount)
             );
