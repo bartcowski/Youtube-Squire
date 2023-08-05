@@ -1,10 +1,5 @@
-# Project Idea - YT SQUIRE
+# Use Cases (concrete examples - current and todo)
 
-### simple tool offering various features to work with YT data through its API
-
----
-
-Use Cases:
 - comments of a given video:
   - find comments using query
   - randomly choose a comment using query
