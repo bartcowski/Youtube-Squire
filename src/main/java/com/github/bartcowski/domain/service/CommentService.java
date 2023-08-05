@@ -2,7 +2,6 @@ package com.github.bartcowski.domain.service;
 
 import com.github.bartcowski.domain.entity.Comment;
 import com.github.bartcowski.domain.entity.User;
-import com.github.bartcowski.infrastructure.rest.CommentYoutubeRestClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +12,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final CommentYoutubeRestClient commentYoutubeRestClient;
+    private final CommentProvider commentProvider;
 
     private final Random random = new Random();
 
     public List<Comment> findAllComments(String resourceId) {
-        return commentYoutubeRestClient.findAllComments(resourceId);
+        return commentProvider.findAllComments(resourceId);
     }
 
     public List<Comment> findCommentsWithPhrase(String resourceId, String phrase) {
-        return commentYoutubeRestClient.findAllComments(resourceId)
+        return commentProvider.findAllComments(resourceId)
                 .stream()
                 .filter(comment -> comment.containsPhrase(phrase))
                 .collect(Collectors.toList());
